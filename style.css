@@ -1,0 +1,372 @@
+/* --- Modern UI Upgrades --- */
+:root {
+    --primary-color: #0f2b5a; /* Navy blue */
+    --secondary-color: #3b82f6;
+    --bg-light: #f8fafc;
+    --text-dark: #334155;
+    --text-light: #64748b;
+    --gradient-primary: linear-gradient(135deg, #0f2b5a 0%, #1e40af 100%);
+    --card-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    --hover-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    --transition-speed: 0.3s;
+}
+
+body {
+    font-family: 'Poppins', sans-serif !important;
+    background-color: var(--bg-light) !important;
+    color: var(--text-dark);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 700;
+    color: var(--primary-color) !important;
+}
+
+p {
+    color: var(--text-light) !important;
+    line-height: 1.6;
+}
+
+/* Update general Elementor sections to look cleaner */
+.elementor-section {
+    position: relative;
+}
+
+/* Cards & Containers modern look */
+.elementor-widget-wrap > .elementor-element {
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+/* Add hover effects for cards */
+.elementor-column:hover {
+    transform: translateY(-5px);
+}
+
+/* Buttons */
+.elementor-button, .elementor-button-link {
+    background: var(--gradient-primary) !important;
+    border-radius: 30px !important;
+    padding: 12px 30px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(15, 43, 90, 0.2) !important;
+}
+
+.elementor-button:hover, .elementor-button-link:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(15, 43, 90, 0.3) !important;
+}
+
+/* Sticky Navbar */
+[data-elementor-type="header"] {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    transition: background 0.3s ease;
+}
+
+/* Smooth Fade-in Animation Classes */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    will-change: opacity, visibility;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* --- Loader Animation --- */
+#loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-color);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loader {
+    border: 5px solid rgba(255,255,255,0.3);
+    border-top: 5px solid #fff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- Scroll To Top Button --- */
+#scrollToTopBtn {
+    position: fixed;
+    bottom: 30px;
+    left: 30px; /* Left side to balance chatbot */
+    background: var(--gradient-primary);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#scrollToTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#scrollToTopBtn:hover {
+    transform: translateY(-5px);
+}
+
+/* --- Popup Modal --- */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+}
+
+.popup-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-content {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: var(--hover-shadow);
+    transform: scale(0.8) translateY(-20px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+.popup-overlay.show .popup-content {
+    transform: scale(1) translateY(0);
+}
+
+.close-popup {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: color 0.2s;
+}
+
+.close-popup:hover {
+    color: var(--primary-color);
+}
+
+#popupTitle {
+    color: var(--primary-color) !important;
+    margin-bottom: 15px;
+}
+
+/* --- AI Chatbot --- */
+.chatbot-toggle-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(15, 43, 90, 0.4);
+    z-index: 1001;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chatbot-toggle-btn:hover {
+    transform: scale(1.1);
+}
+
+.chatbot-container {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 350px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: var(--hover-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.chatbot-container.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.chatbot-header {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatbot-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: white !important;
+}
+
+#closeChat {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.chatbot-body {
+    height: 300px;
+    padding: 15px;
+    overflow-y: auto;
+    background: var(--bg-light);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-message {
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 80%;
+    font-size: 14px;
+    animation: fadeInMessage 0.3s ease;
+}
+
+@keyframes fadeInMessage {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.bot-message {
+    background: #e2e8f0;
+    color: var(--text-dark);
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+}
+
+.user-message {
+    background: var(--primary-color);
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+}
+
+.chatbot-footer {
+    padding: 15px;
+    background: white;
+    border-top: 1px solid #e2e8f0;
+}
+
+.quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.quick-reply-btn {
+    background: white;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-reply-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Responsive fixes */
+@media (max-width: 768px) {
+    .chatbot-container {
+        width: 90%;
+        right: 5%;
+        bottom: 90px;
+    }
+    
+    .popup-content {
+        padding: 30px 20px;
+    }
+}
+
+/* --- Fix for broken icons due to local CORS --- */
+[class^="eicon-"]:before, [class*=" eicon-"]:before,
+.elementor-nav-menu--main .elementor-item.has-submenu:after {
+    font-family: 'Font Awesome 5 Free' !important;
+    font-weight: 900 !important;
+}
+
+/* Map specific eicons to FA5 */
+.eicon-menu-bar:before { content: "\f0c9" !important; }
+.eicon-close:before { content: "\f00d" !important; }
+.eicon-caret-down:before, .elementor-nav-menu--main .elementor-item.has-submenu:after { content: "\f0d7" !important; }
+.eicon-caret-up:before { content: "\f0d8" !important; }
+.eicon-caret-right:before { content: "\f0da" !important; }
+.eicon-caret-left:before { content: "\f0d9" !important; }
+.eicon-chevron-down:before { content: "\f078" !important; }
+.eicon-chevron-up:before { content: "\f077" !important; }
+.eicon-chevron-right:before { content: "\f054" !important; }
+.eicon-chevron-left:before { content: "\f053" !important; }
