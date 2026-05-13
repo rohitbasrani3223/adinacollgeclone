@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     loader.style.display = 'none';
                 }, 800); // match transition in CSS
             }
-        }, 0); // Hide instantly when page loads
+        }, 2500); // Act as a splash screen for 2.5s
     });
 
     // Fallback if load event already fired or takes too long
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 loader.style.display = 'none';
             }, 800);
         }
-    }, 2000);
+    }, 4500);
 
     // --- 2. Scroll to Top Button ---
     const scrollTopBtn = document.getElementById('scrollToTopBtn');
