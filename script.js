@@ -147,4 +147,148 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 600);
         });
     });
+
+    // --- 6. Life @ Adina Gallery & Pagination/Popup (Popation) ---
+    const galleryImages = [
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIPS-FRONT-scaled.jpg', caption: 'AIPS Front View' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIST-FRONT-scaled.jpg', caption: 'AIST Front View' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/ACP2.png', caption: 'ACP Campus' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2023/11/Award_check-removebg-preview.png', caption: 'Award Check' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2023/11/Director-sir.png', caption: 'Director Sir' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/05/ADINA-Logo-1-290x300.png', caption: 'Adina Logo' },
+    ];
+
+    const ITEMS_PER_PAGE = 3;
+    let currentPage = 1;
+    let totalPages = Math.ceil(galleryImages.length / ITEMS_PER_PAGE);
+
+    const galleryGrid = document.getElementById('galleryGrid');
+    const galleryDotsContainer = document.getElementById('galleryDots');
+    const prevBtn = document.getElementById('galleryPrev');
+    const nextBtn = document.getElementById('galleryNext');
+
+    // Modal elements
+    const modal = document.getElementById('galleryModal');
+    const modalImg = document.getElementById('galleryModalImg');
+    const modalCaption = document.getElementById('galleryModalCaption');
+    const closeGallery = document.querySelector('.close-gallery');
+    const modalPrev = document.getElementById('galleryModalPrev');
+    const modalNext = document.getElementById('galleryModalNext');
+    let currentModalIndex = 0;
+
+    function renderGallery() {
+        if (!galleryGrid) return;
+        galleryGrid.innerHTML = '';
+        
+        const start = (currentPage - 1) * ITEMS_PER_PAGE;
+        const end = start + ITEMS_PER_PAGE;
+        const pageImages = galleryImages.slice(start, end);
+
+        pageImages.forEach((item, index) => {
+            const actualIndex = start + index;
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('gallery-item');
+            itemDiv.innerHTML = `
+                <img src="${item.src}" alt="${item.caption}">
+                <div class="gallery-item-caption">${item.caption}</div>
+            `;
+            
+            // Open modal on click
+            itemDiv.addEventListener('click', () => {
+                openModal(actualIndex);
+            });
+            
+            galleryGrid.appendChild(itemDiv);
+        });
+
+        renderPagination();
+    }
+
+    function renderPagination() {
+        if (!galleryDotsContainer) return;
+        galleryDotsContainer.innerHTML = '';
+        
+        for (let i = 1; i <= totalPages; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('pag-dot');
+            if (i === currentPage) dot.classList.add('active');
+            
+            dot.addEventListener('click', () => {
+                currentPage = i;
+                renderGallery();
+            });
+            galleryDotsContainer.appendChild(dot);
+        }
+
+        if (prevBtn) prevBtn.disabled = currentPage === 1;
+        if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderGallery();
+            }
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderGallery();
+            }
+        });
+    }
+
+    // Modal Functions
+    function openModal(index) {
+        if (!modal) return;
+        currentModalIndex = index;
+        updateModalImage();
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden"; // Prevent scrolling
+    }
+
+    function updateModalImage() {
+        const item = galleryImages[currentModalIndex];
+        if (modalImg) modalImg.src = item.src;
+        if (modalCaption) modalCaption.textContent = item.caption;
+    }
+
+    if (closeGallery) {
+        closeGallery.addEventListener('click', () => {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        });
+    }
+
+    if (modalPrev) {
+        modalPrev.addEventListener('click', () => {
+            currentModalIndex = (currentModalIndex - 1 + galleryImages.length) % galleryImages.length;
+            updateModalImage();
+        });
+    }
+
+    if (modalNext) {
+        modalNext.addEventListener('click', () => {
+            currentModalIndex = (currentModalIndex + 1) % galleryImages.length;
+            updateModalImage();
+        });
+    }
+
+    // Close modal when clicking outside image
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        });
+    }
+
+    // Initial Render
+    renderGallery();
+
 });

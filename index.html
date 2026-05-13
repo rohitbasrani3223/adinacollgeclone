@@ -2127,12 +2127,39 @@
                                             </span>
                                         </a>
                                     </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Life @ Adina Gallery Section -->
+            <section class="elementor-section elementor-top-section elementor-section-boxed life-adina-section" id="life-at-adina">
+                <div class="elementor-container elementor-column-gap-default">
+                    <div class="elementor-column elementor-col-100 elementor-top-column">
+                        <div class="elementor-widget-wrap elementor-element-populated">
+                            <div class="elementor-element elementor-widget elementor-widget-heading">
+                                <div class="elementor-widget-container">
+                                    <h2 class="elementor-heading-title elementor-size-default section-title-glow">Life @ Adina</h2>
+                                    <p class="section-subtitle">Glimpses of vibrant campus life, events, and memories.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="life-adina-gallery-container">
+                                <div class="gallery-grid" id="galleryGrid">
+                                    <!-- Gallery items injected via JS -->
+                                </div>
+                                <div class="gallery-pagination" id="galleryPagination">
+                                    <button class="pag-btn prev-btn" id="galleryPrev"><i class="fas fa-chevron-left"></i></button>
+                                    <div class="pag-dots" id="galleryDots"></div>
+                                    <button class="pag-btn next-btn" id="galleryNext"><i class="fas fa-chevron-right"></i></button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+            
         </div>
         <div data-elementor-type="footer" data-elementor-id="2102" class="elementor elementor-2102 elementor-location-footer" data-elementor-post-type="elementor_library">
             <section class="elementor-section elementor-top-section elementor-element elementor-element-51855156 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="51855156" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
@@ -3451,6 +3478,18 @@
 
         <!-- Scroll to top button -->
         <button id="scrollToTopBtn" title="Go to top"><i class="fas fa-chevron-up"></i></button>
+
+        <!-- Gallery Modal for Life @ Adina -->
+        <div id="galleryModal" class="gallery-modal">
+            <span class="close-gallery">&times;</span>
+            <div class="gallery-modal-content">
+                <img id="galleryModalImg" src="" alt="Gallery Image">
+                <div class="gallery-modal-caption" id="galleryModalCaption"></div>
+                <!-- Popup Pagination Controls -->
+                <a class="gallery-modal-prev" id="galleryModalPrev">&#10094;</a>
+                <a class="gallery-modal-next" id="galleryModalNext">&#10095;</a>
+            </div>
+        </div>
 
         <!-- Popups -->
         <div id="popupOverlay" class="popup-overlay">
