@@ -69,10 +69,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 4. Popup Logic ---
     const popupOverlay = document.getElementById('popupOverlay');
     const closePopupBtn = document.querySelector('.close-popup');
+    const popupTitleEl = document.getElementById('popupTitle');
+    const popupBodyEl = document.getElementById('popupBody');
 
-    // Show popup after 3 seconds of page load
+    // Load custom popup settings if any
+    let popupEnabled = true;
+    const savedPopup = localStorage.getItem('adina_popup');
+    if (savedPopup) {
+        const popupData = JSON.parse(savedPopup);
+        popupEnabled = popupData.enabled;
+        if (!popupEnabled && popupOverlay) {
+            popupOverlay.style.display = 'none'; // Completely hide if disabled
+        } else {
+            if (popupTitleEl) popupTitleEl.innerText = popupData.title;
+            if (popupBodyEl) popupBodyEl.innerHTML = popupData.body;
+        }
+    }
+
+    // Show popup after 3 seconds of page load (if enabled)
     setTimeout(() => {
-        if(popupOverlay) {
+        if(popupOverlay && popupEnabled && popupOverlay.style.display !== 'none') {
             popupOverlay.classList.add('show');
         }
     }, 3000);
@@ -149,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- 6. Life @ Adina Gallery & Pagination/Popup (Popation) ---
-    const galleryImages = [
+    const defaultGalleryImages = [
         { src: './images/ceremony.jpg', caption: 'Felicitation Ceremony' },
         { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIPS-FRONT-scaled.jpg', caption: 'AIPS Front View' },
         { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIST-FRONT-scaled.jpg', caption: 'AIST Front View' },
@@ -158,6 +174,10 @@ document.addEventListener('DOMContentLoaded', () => {
         { src: 'https://www.adina.edu.in/wp-content/uploads/2023/11/Director-sir.png', caption: 'Director Sir' },
         { src: 'https://www.adina.edu.in/wp-content/uploads/2024/05/ADINA-Logo-1-290x300.png', caption: 'Adina Logo' },
     ];
+
+    // Load from localStorage if available
+    const savedGallery = localStorage.getItem('adina_gallery');
+    const galleryImages = savedGallery ? JSON.parse(savedGallery) : defaultGalleryImages;
 
     const ITEMS_PER_PAGE = 3;
     let currentPage = 1;
