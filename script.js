@@ -82,7 +82,13 @@ document.addEventListener('DOMContentLoaded', () => {
             popupOverlay.style.display = 'none'; // Completely hide if disabled
         } else {
             if (popupTitleEl) popupTitleEl.innerText = popupData.title;
-            if (popupBodyEl) popupBodyEl.innerHTML = popupData.body;
+            if (popupBodyEl) {
+                let bodyHtml = popupData.body;
+                if (popupData.image) {
+                    bodyHtml = `<img src="${popupData.image}" style="max-width:100%; max-height:300px; border-radius:8px; display:block; margin:0 auto 15px auto; box-shadow:0 5px 15px rgba(0,0,0,0.1);">` + bodyHtml;
+                }
+                popupBodyEl.innerHTML = bodyHtml;
+            }
         }
     }
 
