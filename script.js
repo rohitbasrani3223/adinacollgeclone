@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     loader.style.display = 'none';
                 }, 800); // match transition in CSS
             }
-        }, 2000); // 2 seconds delay to show the loader text and colors
+        }, 0); // Hide instantly when page loads
     });
 
     // Fallback if load event already fired or takes too long
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 loader.style.display = 'none';
             }, 800);
         }
-    }, 4000);
+    }, 2000);
 
     // --- 2. Scroll to Top Button ---
     const scrollTopBtn = document.getElementById('scrollToTopBtn');
