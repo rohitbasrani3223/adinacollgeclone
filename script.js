@@ -150,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 6. Life @ Adina Gallery & Pagination/Popup (Popation) ---
     const galleryImages = [
+        { src: './images/ceremony.jpg', caption: 'Felicitation Ceremony' },
         { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIPS-FRONT-scaled.jpg', caption: 'AIPS Front View' },
         { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIST-FRONT-scaled.jpg', caption: 'AIST Front View' },
         { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/ACP2.png', caption: 'ACP Campus' },
