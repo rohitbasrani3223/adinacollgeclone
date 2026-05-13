@@ -213,19 +213,101 @@ document.addEventListener('DOMContentLoaded', () => {
     const popupEnabledInput = document.getElementById('popupEnabled');
     const popupTitleInput = document.getElementById('popupTitle');
     const popupBodyInput = document.getElementById('popupBody');
+    const popupDropZone = document.getElementById('popupDropZone');
+    const popupFileInput = document.getElementById('popupFileInput');
+    const popupImgUrl = document.getElementById('popupImgUrl');
+    const popupImagePreview = document.getElementById('popupImagePreview');
+    const previewPopupImg = document.getElementById('previewPopupImg');
+    const removePopupImgBtn = document.getElementById('removePopupImgBtn');
 
     function loadPopupSettings() {
         popupEnabledInput.checked = popupData.enabled;
         popupTitleInput.value = popupData.title;
         popupBodyInput.value = popupData.body;
+        
+        if (popupData.image) {
+            popupImgUrl.value = popupData.image;
+            previewPopupImg.src = popupData.image;
+            popupImagePreview.style.display = 'block';
+            popupDropZone.style.display = 'none';
+        }
     }
+
+    // Popup Drag and Drop Logic
+    popupDropZone.addEventListener('click', () => popupFileInput.click());
+
+    popupDropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        popupDropZone.classList.add('dragover');
+    });
+
+    popupDropZone.addEventListener('dragleave', () => {
+        popupDropZone.classList.remove('dragover');
+    });
+
+    popupDropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        popupDropZone.classList.remove('dragover');
+        if (e.dataTransfer.files.length) handlePopupFile(e.dataTransfer.files[0]);
+    });
+
+    popupFileInput.addEventListener('change', (e) => {
+        if (e.target.files.length) handlePopupFile(e.target.files[0]);
+    });
+
+    function handlePopupFile(file) {
+        if (!file.type.startsWith('image/')) {
+            alert('Please select an image file.');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const MAX_WIDTH = 600;
+                const MAX_HEIGHT = 600;
+                let width = img.width;
+                let height = img.height;
+
+                if (width > height) {
+                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                } else {
+                    if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                popupImgUrl.value = dataUrl;
+                previewPopupImg.src = dataUrl;
+                popupImagePreview.style.display = 'block';
+                popupDropZone.style.display = 'none';
+            };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    removePopupImgBtn.addEventListener('click', () => {
+        popupImgUrl.value = '';
+        previewPopupImg.src = '';
+        popupImagePreview.style.display = 'none';
+        popupDropZone.style.display = 'block';
+        popupFileInput.value = '';
+    });
 
     popupForm.addEventListener('submit', (e) => {
         e.preventDefault();
         popupData = {
             enabled: popupEnabledInput.checked,
             title: popupTitleInput.value.trim(),
-            body: popupBodyInput.value.trim()
+            body: popupBodyInput.value.trim(),
+            image: popupImgUrl.value
         };
         localStorage.setItem('adina_popup', JSON.stringify(popupData));
         alert('Popup settings saved successfully! They will apply when you view the website.');
