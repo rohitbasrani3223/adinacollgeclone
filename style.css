@@ -92,26 +92,42 @@ p {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--primary-color);
+    background-color: #ffffff;
     z-index: 9999;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
 .loader {
-    border: 5px solid rgba(255,255,255,0.3);
-    border-top: 5px solid #fff;
+    border: 5px solid rgba(15, 43, 90, 0.1);
+    border-top: 5px solid var(--primary-color);
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+.loader-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    letter-spacing: 1px;
+    animation: pulse 1.5s infinite;
 }
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
 }
 
 /* --- Scroll To Top Button --- */
