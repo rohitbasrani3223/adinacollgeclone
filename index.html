@@ -1135,7 +1135,7 @@
                                                     <nav class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-underline e--animation-slide">
                                                         <ul id="menu-1-3b96684c" class="elementor-nav-menu">
                                                             <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-1023 current_page_item menu-item-1034">
-                                                                <a href="https://www.adina.edu.in/" aria-current="page" class="elementor-item elementor-item-active">Home</a>
+                                                                <a href="index.html" aria-current="page" class="elementor-item elementor-item-active">Home</a>
                                                             </li>
                                                             <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3780">
                                                                 <a href="#" class="elementor-item elementor-item-anchor">Our Institutes</a>
@@ -2147,41 +2147,35 @@
                                 </div>
                             </div>
                             
-                            <!-- Academic & Extracurricular Activities Data -->
-                            <div class="life-adina-content" style="max-width: 1000px; margin: 0 auto 50px auto; padding: 30px; text-align: left; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-left: 5px solid var(--secondary-color);">
-                                <div style="display: flex; flex-wrap: wrap; gap: 40px;">
-                                    <div style="flex: 1; min-width: 300px;">
-                                        <h3 style="color: var(--primary-color); font-size: 1.8rem; margin-bottom: 15px;"><i class="fas fa-graduation-cap" style="color: var(--secondary-color); margin-right: 10px;"></i>Academic Activities</h3>
-                                        <p style="color: #555; line-height: 1.7; margin-bottom: 15px; font-size: 1.05rem;">
-                                            Academic activities in engineering colleges are diverse and multifaceted, designed to provide students with a comprehensive understanding of engineering principles, practical skills, and innovative thinking. These activities are crucial in preparing future engineers to address the complex challenges of the modern world which includes:
-                                        </p>
-                                        <ul style="color: #555; line-height: 1.7; padding-left: 20px; margin-bottom: 20px; font-size: 1.05rem;">
-                                            <li style="margin-bottom: 5px;">Seminars</li>
-                                            <li style="margin-bottom: 5px;">Conferences</li>
-                                            <li style="margin-bottom: 5px;">Workshops</li>
-                                            <li style="margin-bottom: 5px;">Industrial Visits etc.</li>
-                                        </ul>
+                            <!-- Academic & Extracurricular Activities Cards -->
+                            <div class="life-adina-cards-grid">
+                                <div class="activity-clickable glass-card premium-card" data-category="academic">
+                                    <div class="activity-card-content">
+                                        <div class="activity-icon"><i class="fas fa-graduation-cap"></i></div>
+                                        <h3>Academic Activities</h3>
+                                        <p>Seminars, Conferences, Workshops, and Industrial Visits designed for holistic growth.</p>
+                                        <span class="view-photos-btn">View Photos <i class="fas fa-camera"></i></span>
                                     </div>
-                                    <div style="flex: 1; min-width: 300px;">
-                                        <h3 style="color: var(--primary-color); font-size: 1.8rem; margin-bottom: 15px;"><i class="fas fa-running" style="color: var(--secondary-color); margin-right: 10px;"></i>Extracurricular Activities</h3>
-                                        
-                                        <div style="margin-bottom: 25px; padding: 15px; background: #f8fafc; border-radius: 8px;">
-                                            <strong style="color: var(--primary-color); display: block; margin-bottom: 8px; font-size: 1.1rem;">Sports Activities</strong>
-                                            <ul style="color: #555; padding-left: 20px; line-height: 1.6;">
-                                                <li>Inter college Games</li>
-                                                <li>University Games</li>
-                                            </ul>
-                                        </div>
-                                        
-                                        <div style="padding: 15px; background: #f8fafc; border-radius: 8px;">
-                                            <strong style="color: var(--primary-color); display: block; margin-bottom: 8px; font-size: 1.1rem;">Cultural Activities</strong>
-                                            <ul style="color: #555; padding-left: 20px; line-height: 1.6;">
-                                                <li>Cultural Fests</li>
-                                                <li>Social Awareness Programs</li>
-                                                <li>Vocational Tours</li>
-                                                <li>Special Day Celebrations</li>
-                                            </ul>
-                                        </div>
+                                </div>
+                                <div class="activity-clickable glass-card premium-card" data-category="extracurricular">
+                                    <div class="activity-card-content">
+                                        <div class="activity-icon"><i class="fas fa-running"></i></div>
+                                        <h3>Extracurricular</h3>
+                                        <p>Sports, Cultural Fests, Social Awareness Programs, and Memories beyond books.</p>
+                                        <span class="view-photos-btn">View Photos <i class="fas fa-camera"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal for Activity Photos (Hidden by default) -->
+                            <div id="activityModal" class="activity-modal">
+                                <div class="activity-modal-content glass-card">
+                                    <span class="close-activity-modal">&times;</span>
+                                    <h2 id="activityModalTitle">Activity Photos</h2>
+                                    <div id="activityModalGrid" class="activity-photos-grid"></div>
+                                    <div id="activityModalEmpty" class="modal-empty-msg" style="display:none;">
+                                        <i class="fas fa-images"></i>
+                                        <p>No photos available for this category yet.</p>
                                     </div>
                                 </div>
                             </div>
@@ -3120,6 +3114,71 @@
         </script>
         <script src="https://www.adina.edu.in/wp-content/plugins/elementskit-lite/widgets/init/assets/js/elementor.js?ver=3.2.5" id="elementskit-elementor-js"></script>
         <script src="https://www.adina.edu.in/wp-content/plugins/elementor-pro/assets/lib/sticky/jquery.sticky.min.js?ver=3.19.2" id="e-sticky-js"></script>
+        <!-- Quick Contact CTA & Map Section -->
+        <section class="quick-contact-cta fade-in-section">
+            <div class="cta-container glass-card">
+                <h2>Have Questions? We're Here to Help!</h2>
+                <p>For detailed admission information, department contacts, and institutional enquiries, please visit our dedicated contact page.</p>
+                <a href="contact.html" class="cta-btn">Go to Contact Us <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Modern Map Section -->
+        <section id="map-section" class="map-modern-container fade-in-section">
+            <div class="map-wrapper">
+                <div class="map-overlay-card glass-card">
+                    <div class="overlay-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <h3>Visit Our Campus</h3>
+                    <p>NH 86, Bhopal Road, Sagar, Madhya Pradesh 470001</p>
+                    <a href="https://maps.google.com/?cid=15187356735803167733" target="_blank" class="get-directions-btn">
+                        Get Directions <i class="fas fa-directions"></i>
+                    </a>
+                </div>
+                <div class="google-map-iframe">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.4444!2d78.7333!3d23.8333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3978d14a!2sAdina%20Group%20of%20Institutions!5e0!3m2!1sen!2sin!4v1713248356789!5m2!1sen!2sin" 
+                        width="100%" 
+                        height="500" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Campus Working Hours -->
+        <section id="working-hours" class="work-time-modern fade-in-section">
+            <div class="work-time-container glass-card">
+                <div class="work-time-header">
+                    <div class="header-icon"><i class="fas fa-clock"></i></div>
+                    <h2>Campus Working Hours</h2>
+                    <p>Adina Group of Institutions is open during the following hours for academic and administrative services.</p>
+                </div>
+                <div class="work-time-grid">
+                    <div class="work-time-row">
+                        <span class="day">Monday - Friday</span>
+                        <span class="dots"></span>
+                        <span class="time">09:00 AM - 05:00 PM</span>
+                    </div>
+                    <div class="work-time-row">
+                        <span class="day">Saturday</span>
+                        <span class="dots"></span>
+                        <span class="time">09:00 AM - 02:00 PM</span>
+                    </div>
+                    <div class="work-time-row closed">
+                        <span class="day">Sunday</span>
+                        <span class="dots"></span>
+                        <span class="time">Closed (Public Holiday)</span>
+                    </div>
+                </div>
+                <div class="work-time-footer">
+                    <p><i class="fas fa-info-circle"></i> Emergency services and hostel support are available 24/7.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Modern UI Additions -->
         <!-- Loading Animation -->
 
