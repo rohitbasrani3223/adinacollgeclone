@@ -394,4 +394,57 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial Render
     renderGallery();
 
+    // --- 7. Contact Directory Filter ---
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const profileCards = document.querySelectorAll('.contact-profile-card');
+
+    if(filterBtns.length > 0 && profileCards.length > 0) {
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                profileCards.forEach(card => {
+                    if(filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'block';
+                        // Add small animation
+                        card.style.animation = 'none';
+                        card.offsetHeight; // trigger reflow
+                        card.style.animation = 'fadeInMessage 0.4s ease';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    }
+
+    // Enquiry form dummy submission
+    const enquiryForm = document.getElementById('enquiryForm');
+    if (enquiryForm) {
+        enquiryForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = enquiryForm.querySelector('.submit-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                btn.innerHTML = 'Sent Successfully! <i class="fas fa-check"></i>';
+                btn.style.background = 'var(--secondary-color)';
+                enquiryForm.reset();
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = 'var(--gradient-primary)';
+                    btn.disabled = false;
+                }, 3000);
+            }, 1500);
+        });
+    }
+
 });
