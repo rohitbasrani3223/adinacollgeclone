@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 1. Loader Animation ---
     const loader = document.getElementById('loader-wrapper');
     const isLifePage = window.location.pathname.includes('life-at-adina.html');
-    const loadDelay = isLifePage ? 600 : 2500;
-    const fallbackDelay = isLifePage ? 3000 : 4500;
+    const loadDelay = 1000;
+    const fallbackDelay = 2500;
 
     window.addEventListener('load', () => {
         setTimeout(() => {

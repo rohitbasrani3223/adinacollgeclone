@@ -85,6 +85,7 @@ p {
     font-size: 22px;
     background: linear-gradient(135deg, #0f2b5a 0%, #3b82f6 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     line-height: 1;
     letter-spacing: -0.5px;
