@@ -41,9 +41,15 @@ p {
     transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
 }
 
-/* Add hover effects for cards */
-.elementor-column:hover {
+/* Modern Card hover effects - targeted instead of generic */
+.premium-card:hover, .life-adina-section .elementor-column:hover {
     transform: translateY(-5px);
+}
+
+/* Prevent fixed elements (like social icons) from jumping */
+.elementor-fixed, .elementor-fixed:hover, .elementor-widget-social-icons.elementor-fixed {
+    transform: none !important;
+    transition: none !important;
 }
 
 /* Buttons */
@@ -57,8 +63,12 @@ p {
 }
 
 .elementor-button:hover, .elementor-button-link:hover {
-    transform: translateY(-3px) scale(1.02);
+    transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(15, 43, 90, 0.3) !important;
+}
+
+.elementor-button:active, .elementor-button-link:active {
+    transform: translateY(-1px) scale(0.98);
 }
 
 /* Header Logo Styling */
@@ -769,8 +779,13 @@ p {
 }
 
 .activity-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
     box-shadow: var(--hover-shadow);
+}
+
+.activity-card:active {
+    transform: translateY(-4px) scale(0.98);
+    transition: transform 0.1s ease;
 }
 
 .activity-card:hover::before {
