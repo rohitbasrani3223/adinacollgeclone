@@ -1054,8 +1054,7 @@
                                                             width: 100%
                                                         }
 
-                                                        @media (min-width: 768px) {
-                                                            .elementor-widget-image-box.elementor-position-left .elementor-image-box-wrapper,.elementor-widget-image-box.elementor-position-right .elementor-image-box-wrapper {
+                                                        .elementor-widget-image-box.elementor-position-left .elementor-image-box-wrapper,.elementor-widget-image-box.elementor-position-right .elementor-image-box-wrapper {
                                                                 display:flex
                                                             }
 
@@ -3538,19 +3537,46 @@
                     </div>
                 </div>
 
-                <!-- Address & Work Time -->
-                <div class="address-section glass-card">
-                    <div class="address-info">
-                        <h3><i class="fas fa-map-marker-alt"></i> Location & Hours</h3>
-                        <p><strong>Address:</strong> NH 86, Bhopal Road, Sagar, 470001, Madhya Pradesh</p>
-                        <p><strong>Work Time:</strong></p>
-                        <ul>
-                            <li>Monday - Friday: 09:00 - 20:00</li>
-                            <li>Saturday & Sunday: 10:30 - 22:00</li>
-                        </ul>
+                <!-- Modern Map Integration Section -->
+                <div class="map-modern-container fade-in-section">
+                    <div class="map-heading">
+                        <h2 class="section-heading">Locate Our Campus</h2>
+                        <p>Visit us to experience our state-of-the-art facilities</p>
                     </div>
-                    <div class="map-placeholder">
-                        <iframe src="https://maps.google.com/?cid=15187356735803167733&amp;g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAF&amp;hl=en-US&amp;source=embed" width="100%" height="250" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div class="map-box">
+                        <iframe 
+                            src="https://maps.google.com/?cid=15187356735803167733&amp;g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAF&amp;hl=en-US&amp;source=embed" 
+                            width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                        <div class="map-info-overlay glass-card">
+                            <div class="overlay-icon"><i class="fas fa-map-marked-alt"></i></div>
+                            <h4>ADINA Campus</h4>
+                            <p>NH 86, Bhopal Road, Sagar, 470001, Madhya Pradesh, India</p>
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=Adina+Group+of+Institutions+Sagar" target="_blank" class="directions-btn">
+                                Get Directions <i class="fas fa-directions"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modern Work Time Section -->
+                <div class="work-time-modern fade-in-section">
+                    <div class="glass-card work-time-inner">
+                        <div class="time-icon"><i class="fas fa-clock"></i></div>
+                        <h3>Campus Working Hours</h3>
+                        <div class="hours-display">
+                            <div class="hours-row">
+                                <span class="day">Monday - Friday</span>
+                                <span class="dots"></span>
+                                <span class="time">09:00 AM - 08:00 PM</span>
+                            </div>
+                            <div class="hours-row">
+                                <span class="day">Saturday & Sunday</span>
+                                <span class="dots"></span>
+                                <span class="time">10:30 AM - 10:00 PM</span>
+                            </div>
+                        </div>
+                        <p class="holiday-note">*Closed on National Holidays</p>
                     </div>
                 </div>
 
