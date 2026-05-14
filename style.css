@@ -61,15 +61,46 @@ p {
     box-shadow: 0 8px 20px rgba(15, 43, 90, 0.3) !important;
 }
 
+/* Header Logo Styling */
+.header-logo-container {
+    text-decoration: none !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo-main-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    background: linear-gradient(135deg, #0f2b5a 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+}
+
+.logo-sub-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
 /* Sticky Navbar */
 [data-elementor-type="header"] {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.95) !important;
+    background: rgba(255, 255, 255, 0.98) !important;
     backdrop-filter: blur(10px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    transition: background 0.3s ease;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
 }
 
 /* Smooth Fade-in Animation Classes */
