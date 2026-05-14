@@ -18,16 +18,20 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Default Gallery Images
     const defaultGalleryImages = [
-        { src: './images/ceremony.jpg', caption: 'Felicitation Ceremony' },
-        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIPS-FRONT-scaled.jpg', caption: 'AIPS Front View' },
-        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIST-FRONT-scaled.jpg', caption: 'AIST Front View' },
-        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/ACP2.png', caption: 'ACP Campus' },
-        { src: 'https://www.adina.edu.in/wp-content/uploads/2023/11/Award_check-removebg-preview.png', caption: 'Award Check' },
-        { src: 'https://www.adina.edu.in/wp-content/uploads/2023/11/Director-sir.png', caption: 'Director Sir' },
-        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/05/ADINA-Logo-1-290x300.png', caption: 'Adina Logo' }
+        { src: './images/ceremony.jpg', caption: 'Felicitation Ceremony', category: 'main' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIPS-FRONT-scaled.jpg', caption: 'AIPS Front View', category: 'main' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIST-FRONT-scaled.jpg', caption: 'AIST Front View', category: 'main' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/ACP2.png', caption: 'ACP Campus', category: 'main' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2023/11/Award_check-removebg-preview.png', caption: 'Award Check', category: 'main' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2023/11/Director-sir.png', caption: 'Director Sir', category: 'main' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/05/ADINA-Logo-1-290x300.png', caption: 'Adina Logo', category: 'main' }
     ];
 
     let galleryData = JSON.parse(localStorage.getItem('adina_gallery')) || defaultGalleryImages;
+    // Retroactively add category if missing
+    galleryData.forEach(item => {
+        if (!item.category) item.category = 'main';
+    });
 
     // Default Popup
     const defaultPopup = {
@@ -48,10 +52,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const imgUrlInput = document.getElementById('imgUrl');
     const imgCaptionInput = document.getElementById('imgCaption');
     const editIndexInput = document.getElementById('editIndex');
+    const imgCategoryInput = document.getElementById('imgCategory');
+    const categoryFilter = document.getElementById('categoryFilter');
+
+    function getCategoryName(val) {
+        const options = {
+            'main': 'Main Gallery',
+            'seminars': 'Seminars & Conferences',
+            'workshops': 'Workshops & Tech Events',
+            'industrial': 'Industrial Visits',
+            'sports': 'Sports Activities',
+            'cultural': 'Cultural Fests',
+            'social': 'Social Awareness'
+        };
+        return options[val] || 'Main Gallery';
+    }
 
     function renderTable() {
         tableBody.innerHTML = '';
+        const filterVal = categoryFilter.value;
+        
         galleryData.forEach((item, index) => {
+            if (filterVal !== 'all' && item.category !== filterVal) return;
+
             let displayUrl = item.src;
             if (displayUrl.startsWith('data:image')) {
                 displayUrl = '<span style="color:var(--success); font-weight:bold;"><i class="fas fa-file-image"></i> Uploaded via Dropzone</span><br><small style="color:#888;">(Base64 Data)</small>';
@@ -64,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td><img src="${item.src}" alt="${item.caption}" class="table-img"></td>
                 <td><div style="word-break: break-all; max-width: 250px;">${displayUrl}</div></td>
                 <td>${item.caption}</td>
+                <td><span class="badge" style="background:var(--secondary); color:#fff; padding:4px 8px; border-radius:4px; font-size:12px;">${getCategoryName(item.category)}</span></td>
                 <td class="actions">
                     <button class="icon-btn edit" onclick="editImage(${index})"><i class="fas fa-edit"></i></button>
                     <button class="icon-btn delete" onclick="deleteImage(${index})"><i class="fas fa-trash"></i></button>
@@ -72,6 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tableBody.appendChild(tr);
         });
     }
+
+    categoryFilter.addEventListener('change', renderTable);
 
     // Modal Handlers
     addImgBtn.addEventListener('click', () => {
@@ -168,7 +194,8 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const newImg = {
             src: imgUrlInput.value.trim(),
-            caption: imgCaptionInput.value.trim()
+            caption: imgCaptionInput.value.trim(),
+            category: imgCategoryInput.value
         };
 
         const idx = parseInt(editIndexInput.value);
@@ -191,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modalTitle.textContent = 'Edit Gallery Image';
         imgUrlInput.value = item.src;
         imgCaptionInput.value = item.caption;
+        imgCategoryInput.value = item.category || 'main';
         editIndexInput.value = index;
         imageModal.style.display = 'flex';
     };

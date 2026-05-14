@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- 1. Loader Animation ---
     const loader = document.getElementById('loader-wrapper');
+    const isLifePage = window.location.pathname.includes('life-at-adina.html');
+    const loadDelay = isLifePage ? 600 : 2500;
+    const fallbackDelay = isLifePage ? 3000 : 4500;
+
     window.addEventListener('load', () => {
         setTimeout(() => {
             if (loader) {
@@ -10,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     loader.style.display = 'none';
                 }, 800); // match transition in CSS
             }
-        }, 2500); // Act as a splash screen for 2.5s
+        }, loadDelay); // Act as a splash screen
     });
 
     // Fallback if load event already fired or takes too long
@@ -21,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 loader.style.display = 'none';
             }, 800);
         }
-    }, 4500);
+    }, fallbackDelay);
 
     // --- 2. Scroll to Top Button ---
     const scrollTopBtn = document.getElementById('scrollToTopBtn');
@@ -43,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 3. Fade-in on Scroll ---
-    const sections = document.querySelectorAll('.elementor-section, .elementor-widget');
+    const sections = document.querySelectorAll('.elementor-section, .elementor-widget, .fade-in-section');
     
     const appearOptions = {
         threshold: 0.1,
@@ -172,13 +176,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 6. Life @ Adina Gallery & Pagination/Popup (Popation) ---
     const defaultGalleryImages = [
-        { src: './images/ceremony.jpg', caption: 'Felicitation Ceremony' },
-        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIPS-FRONT-scaled.jpg', caption: 'AIPS Front View' },
-        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIST-FRONT-scaled.jpg', caption: 'AIST Front View' },
-        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/ACP2.png', caption: 'ACP Campus' },
-        { src: 'https://www.adina.edu.in/wp-content/uploads/2023/11/Award_check-removebg-preview.png', caption: 'Award Check' },
-        { src: 'https://www.adina.edu.in/wp-content/uploads/2023/11/Director-sir.png', caption: 'Director Sir' },
-        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/05/ADINA-Logo-1-290x300.png', caption: 'Adina Logo' },
+        { src: './images/ceremony.jpg', caption: 'Felicitation Ceremony', category: 'main' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIPS-FRONT-scaled.jpg', caption: 'AIPS Front View', category: 'main' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/AIST-FRONT-scaled.jpg', caption: 'AIST Front View', category: 'main' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/06/ACP2.png', caption: 'ACP Campus', category: 'main' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2023/11/Award_check-removebg-preview.png', caption: 'Award Check', category: 'main' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2023/11/Director-sir.png', caption: 'Director Sir', category: 'main' },
+        { src: 'https://www.adina.edu.in/wp-content/uploads/2024/05/ADINA-Logo-1-290x300.png', caption: 'Adina Logo', category: 'main' },
     ];
 
     // Load from localStorage if available
@@ -310,6 +314,78 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        });
+    }
+
+    // --- Activity Clickable Modals ---
+    const activityCards = document.querySelectorAll('.activity-clickable');
+    const activityModal = document.getElementById('activityModal');
+    const closeActivityModal = document.querySelector('.close-activity-modal');
+    const activityModalTitle = document.getElementById('activityModalTitle');
+    const activityModalGrid = document.getElementById('activityModalGrid');
+    const activityModalEmpty = document.getElementById('activityModalEmpty');
+
+    if (activityCards.length > 0 && activityModal) {
+        activityCards.forEach(card => {
+            const category = card.getAttribute('data-category');
+            const titleText = card.querySelector('h3').innerText;
+            const catImages = galleryImages.filter(img => img.category === category);
+            
+            // Inject glassmorphism background if an image exists
+            if (catImages.length > 0) {
+                const bgImgUrl = catImages[0].src;
+                const bgDiv = document.createElement('div');
+                bgDiv.classList.add('activity-card-bg');
+                bgDiv.style.backgroundImage = `url('${bgImgUrl}')`;
+                card.appendChild(bgDiv);
+            }
+
+            card.addEventListener('click', () => {
+                activityModalTitle.innerText = titleText + " Photos";
+                activityModalGrid.innerHTML = '';
+                
+                if (catImages.length > 0) {
+                    activityModalGrid.style.display = 'grid';
+                    activityModalEmpty.style.display = 'none';
+                    
+                    catImages.forEach((img, index) => {
+                        const imgEl = document.createElement('img');
+                        imgEl.src = img.src;
+                        imgEl.alt = img.caption || titleText;
+                        // Clicking this image could open the main gallery modal
+                        imgEl.addEventListener('click', () => {
+                            const globalIndex = galleryImages.indexOf(img);
+                            if (globalIndex !== -1 && modal) {
+                                currentModalIndex = globalIndex;
+                                updateModalImage();
+                                activityModal.classList.remove('show'); // close activity modal
+                                modal.style.display = "block"; // open global modal
+                            }
+                        });
+                        activityModalGrid.appendChild(imgEl);
+                    });
+                } else {
+                    activityModalGrid.style.display = 'none';
+                    activityModalEmpty.style.display = 'block';
+                }
+                
+                activityModal.classList.add('show');
+                document.body.style.overflow = "hidden";
+            });
+        });
+
+        if (closeActivityModal) {
+            closeActivityModal.addEventListener('click', () => {
+                activityModal.classList.remove('show');
+                document.body.style.overflow = "auto";
+            });
+        }
+
+        activityModal.addEventListener('click', (e) => {
+            if (e.target === activityModal) {
+                activityModal.classList.remove('show');
                 document.body.style.overflow = "auto";
             }
         });
